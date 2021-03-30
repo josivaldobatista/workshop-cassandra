@@ -28,12 +28,25 @@ public class ProductService {
 
   public List<ProductDTO> findByDepartment(String department) {
     List<Product> list;
-    if ("".equals(department)) {
+    list = teste(department);
+    return list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
+  }
+
+  public List<ProductDTO> findByDescription(String text) {
+    List<Product> list;
+    list = teste(text);
+    return list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
+  }
+
+  // MÉTODOS AUXILIARES
+  private List<Product> teste(String text) {
+    List<Product> list;
+    if ("".equals(text)) {
       list = repository.findAll();
     } else {
-      list = repository.findByDepartment(department);
+      list = repository.findByDescription("%" + text + "%");
     }
-    return list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
+    return list;
   }
 
   private Product getById(UUID id) {
