@@ -1,5 +1,6 @@
 package com.jfb.workshopcassandra.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.jfb.workshopcassandra.models.dto.ProductDTO;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,5 +26,12 @@ public class ProductController {
     ProductDTO obj = service.findById(id);
     return ResponseEntity.ok().body(obj);
   }
-  
+
+  @GetMapping
+  public ResponseEntity<List<ProductDTO>> findByDepartment(
+      @RequestParam(name = "department", defaultValue = "") String department) {
+    List<ProductDTO> listDto = service.findByDepartment(department);
+    return ResponseEntity.ok().body(listDto);
+  }
+
 }
