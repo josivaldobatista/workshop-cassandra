@@ -47,6 +47,13 @@ public class DepartmentService {
     return new DepartmentDTO(entity);
   }
 
+  public void deleteById(UUID id) {
+    if (!repository.existsById(id)) {
+      throw new ResourceNotFoundException("Id inexistente");
+    }
+    repository.deleteById(id);
+  }
+
   // MÉTODOS AUXILIARES
   private void copyDtoToEntity(DepartmentDTO dto, Department entity) {
     entity.setName(dto.getName());
@@ -56,4 +63,5 @@ public class DepartmentService {
     Optional<Department> result = repository.findById(id);
     return result.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado"));
   }
+
 }
